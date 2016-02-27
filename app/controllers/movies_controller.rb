@@ -21,11 +21,12 @@ class MoviesController < ApplicationController
     if params[:ratings].nil?
       @ratings={}
       @all_ratings.each { |variable| @ratings[variable]=1}
-      @movies=Movie.all
-    else
+      # @movies=Movie.all
+    # else
       # @check = @ratings.include?(:all_rating)
-      @movies =Movie.order(@sort).all.where(rating:@ratings.keys)
+      
     end
+    @movies =Movie.order(@sort).all.where(rating:@ratings.keys)
   
     
     # @movies = Movie.where(:all, order: @sort)
@@ -54,6 +55,24 @@ class MoviesController < ApplicationController
     @movie.update_attributes!(movie_params)
     flash[:notice] = "#{@movie.title} was successfully updated."
     redirect_to movie_path(@movie)
+  end
+  
+  def movie_update
+    # @movie= Movie.find (params:[:title])
+  end
+
+  def movie_update2
+    
+      @movie= Movie.find_by_title(movie_params[:title])
+      if @movie==nil
+          flash[:notice] = "Movie Not Found"
+      else
+        if (movie_params[:rating]!="")
+          @movie.update_attribute(:rating, movie_params[:rating])
+        end
+        flash[:notice] = " #{@movie.title} was successfully updated."
+      end
+      redirect_to movies_path
   end
 
   def destroy

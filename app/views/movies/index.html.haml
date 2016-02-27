@@ -4,7 +4,7 @@
   Include:
   - @all_ratings.each do |rating|
     = rating
-    = check_box_tag "ratings_#{rating}","1", @ratings.include?(rating)
+    = check_box_tag "ratings[#{rating}]","1", @ratings.include?(rating)
   = submit_tag 'Refresh',name:"ratings_submit"
 
 %table#movies
@@ -23,4 +23,4 @@
         %td= link_to "More about #{movie.title}", movie_path(movie)
 
 = link_to 'Add new movie', new_movie_path
-= link_to 'Edit', new_movie_path
+= link_to 'Update Movie List', update_path

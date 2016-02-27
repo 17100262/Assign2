@@ -15,6 +15,8 @@ Rails.application.routes.draw do
   #   resources :products
 
   resources :movies
+  get 'update/'=>'movies#movie_update'
+  put 'update/'=>'movies#movie_update2'
   
   # Example resource route with options:
   #   resources :products do
