@@ -2,6 +2,7 @@ class MoviesController < ApplicationController
 
   def movie_params
     params.require(:movie).permit(:title, :rating, :description, :release_date)
+    
   end
 
   def show
@@ -11,7 +12,27 @@ class MoviesController < ApplicationController
   end
 
   def index
-    @movies = Movie.all
+    @sort=params[:sort]
+    @ratings = params[:ratings]
+    @all_ratings = Movie.all_ratings
+   
+    @check = nil
+    
+    if params[:ratings].nil?
+      @ratings={}
+      @all_ratings.each { |variable| @ratings[variable]=1}
+      @movies=Movie.all
+    else
+      # @check = @ratings.include?(:all_rating)
+      @movies =Movie.order(@sort).all.where(rating:@ratings.keys)
+    end
+  
+    
+    # @movies = Movie.where(:all, order: @sort)
+    # condition: {raitings:@all_ratings},
+    
+    # @movies =Movie.order(@sort).all.where(condition: {raitings:@all_ratings})
+    # @movies = Movie.all
   end
 
   def new
