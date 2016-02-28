@@ -10,9 +10,9 @@
 %table#movies
   %thead
     %tr
-      %th= link_to "Movie Title",{:sort => "title" },{id:"title_header"}
+      %th{:class=>@check}= link_to "Movie Title",{:sort => "title" },{id:"title_header"}
       %th Rating
-      %th= link_to "Release Date",{:sort => "release_date" },{id:"release_date_header"}
+      %th{:class=>@check1}= link_to "Release Date",{:sort => "release_date" },{id:"release_date_header"}
       %th More Info
   %tbody
     - @movies.each do |movie|
@@ -25,3 +25,4 @@
 = link_to 'Add new movie', new_movie_path
 = link_to 'Update Movie List', update_path
 = link_to 'Delete Movie List by Name', delete_path
+= link_to 'Delete Movie List by Rating', delete_by_rating_path

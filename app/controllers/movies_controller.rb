@@ -16,24 +16,23 @@ class MoviesController < ApplicationController
     @ratings = params[:ratings]
     @all_ratings = Movie.all_ratings
    
-    @check = nil
+    if @sort==nil
+      @check = ""
+      @check1 = ""
+    elsif @sort=="title"
+      @check="hlite"
+      @check1=""
+    elsif @sort=="release_date"
+        @check1="hlite"
+        @check=""
+    end
     
     if params[:ratings].nil?
       @ratings={}
       @all_ratings.each { |variable| @ratings[variable]=1}
-      # @movies=Movie.all
-    # else
-      # @check = @ratings.include?(:all_rating)
-      
     end
     @movies =Movie.order(@sort).all.where(rating:@ratings.keys)
-  
-    
-    # @movies = Movie.where(:all, order: @sort)
-    # condition: {raitings:@all_ratings},
-    
-    # @movies =Movie.order(@sort).all.where(condition: {raitings:@all_ratings})
-    # @movies = Movie.all
+
   end
 
   def new
@@ -86,6 +85,20 @@ class MoviesController < ApplicationController
     # @movie.destroy
     flash[:notice] = "Movie '#{@movie.title}' deleted."
     # redirect_to movies_path
+  end
+  
+  
+  def deleteRating
+    
+    @sort=params[:sort]
+    @ratings = params[:ratings]
+    @all_ratings = Movie.all_ratings
+    if params[:ratings].nil?
+      @ratings={}
+      @all_ratings.each { |variable| @ratings[variable]=1}
+    end
+    @movies =Movie.where(rating:@ratings.keys)
+    
   end
 
   def destroy
